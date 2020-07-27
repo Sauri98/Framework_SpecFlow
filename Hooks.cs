@@ -3,7 +3,6 @@ using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 
-
 using FrameworkTest_Specflow.Test_cases;
 using NUnit.Framework;
 using System;
@@ -26,15 +25,11 @@ namespace FrameworkTest_Specflow
         private static ScenarioContext _scenarioContext;
         public static string ProjectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\.."));
 
-        //public Hooks(ScenarioContext scenarioContext)
-        //{
-        //    _scenarioContext =  scenarioContext;
-        //}
-        //public static IWebDriver driver;
+        
         [BeforeTestRun]
         public static void OneTimeSetup()
         {
-            //ReportExt.reportInitialize();
+            
             var _path = Path.Combine(ProjectDir, "Extent Reports");
             Directory.CreateDirectory(_path);
             var htmlReporter = new ExtentHtmlReporter(_path + "//");
@@ -49,11 +44,11 @@ namespace FrameworkTest_Specflow
         public static void Initialize(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
-            //ReportExt.BeforeScenario();
+            
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _scenario = _featureName.CreateNode<Scenario>(_scenarioContext.ScenarioInfo.Title);
-            //driver = new ChromeDriver();
+            
             if (PropertiesDr.driver == null)
             {
                 
@@ -66,7 +61,7 @@ namespace FrameworkTest_Specflow
         [AfterStep]
         public static void AfterStep()
         {
-            //ReportExt.AfterStep();
+           
             var steptype = ScenarioStepContext.Current.StepInfo.StepDefinitionType.ToString();
             if (_scenarioContext.ScenarioExecutionStatus == ScenarioExecutionStatus.OK)
             {
@@ -135,7 +130,7 @@ namespace FrameworkTest_Specflow
         [AfterTestRun]
         public static void OneTimeTearDown()
         {
-            // ReportExt.flushReport();
+           
             _extent.Flush();
             if (PropertiesDr.driver != null)
             {
@@ -147,10 +142,10 @@ namespace FrameworkTest_Specflow
         [AfterScenario]
         public static void CleanUp()
         {
-            //ReportExt.AfterTest();
+            
             if (TestContext.CurrentContext.Result.Outcome.ToString().Equals("Failed"))
             {
-                //PropertiesDr.driver.Quit();
+              
                 PropertiesDr.driver = null;
             }
         }
@@ -158,7 +153,7 @@ namespace FrameworkTest_Specflow
         [BeforeFeature]
         public static void beforefeature(FeatureContext featureContext)
         {
-            //ReportExt.BeforeFeature(featureContext);
+            
             _featureName = _extent.CreateTest<Feature>(featureContext.FeatureInfo.Title);
         }
 
